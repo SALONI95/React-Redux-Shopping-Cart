@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import type { RootState } from "../../store/store";
-import { ITEMS, products } from "../../productData/product";
+import { ITEMS } from "../../productData/product";
 
 export const cartItemsWithOffers = createSelector(
   [(state: RootState) => state.product.cartItems],
@@ -9,8 +9,7 @@ export const cartItemsWithOffers = createSelector(
     const isCheeseItemExist = cartAfterOffer.find(
       (item) => item.product.name == ITEMS.CHEESE
     );
-    if (isCheeseItemExist) {
-      isCheeseItemExist.quantity += 1;
+    if (isCheeseItemExist && isCheeseItemExist.quantity > 1) {
       isCheeseItemExist.discount = isCheeseItemExist.product.price;
     }
 
@@ -23,19 +22,7 @@ export const cartItemsWithOffers = createSelector(
       );
 
       if (isBreadItemExist) {
-        isBreadItemExist.quantity += 1;
-        isBreadItemExist.price += isBreadItemExist.product.price;
         isBreadItemExist.discount += isBreadItemExist.product.price / 2;
-      } else {
-        const breadItem = products.find((items) => items.name == ITEMS.BREAD);
-        if (breadItem) {
-          cartAfterOffer.push({
-            product: breadItem,
-            price: breadItem.price,
-            quantity: 1,
-            discount: breadItem.price / 2,
-          });
-        }
       }
     }
     const isButterItemExist = cartAfterOffer.find(
@@ -45,21 +32,19 @@ export const cartItemsWithOffers = createSelector(
       isButterItemExist.discount = isButterItemExist.product.price;
     }
 
-    const subTotal = cartAfterOffer.reduce(
-      (total, items) => total + items.product.price * items.quantity,
-      0
-    );
-    const discount = cartAfterOffer.reduce(
-      (totalDiscount, items) => totalDiscount + items.discount,
-      0
-    );
+    const subTotal: number = +cartAfterOffer
+      .reduce((total, items) => total + items.product.price * items.quantity, 0)
+      .toFixed(2);
+    const discount: number = +cartAfterOffer
+      .reduce((totalDiscount, items) => totalDiscount + items.discount, 0)
+      .toFixed(2);
 
-    const totalAmount = subTotal - discount;
+    const totalAmount: number = subTotal - discount;
 
     const billDetails = {
       subTotal,
       discount,
-      totalAmount,
+      totalAmount: totalAmount.toFixed(2),
     };
     return { cartAfterOffer, billDetails };
   }

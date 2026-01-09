@@ -4,7 +4,6 @@ import type { IProduct } from "../../types/product";
 type Cart = {
   product: IProduct;
   quantity: number;
-  price: number;
   discount: number;
 };
 
@@ -27,12 +26,10 @@ export const productSlice = createSlice({
       // let quantity:number =1,price:number = currItem.price, discount:number =0;
       if (isExist) {
         isExist.quantity += 1;
-        isExist.price += currItem.price;
       } else {
         state.cartItems.push({
           product: currItem,
           quantity: 1,
-          price: currItem.price,
           discount: 0,
         });
       }

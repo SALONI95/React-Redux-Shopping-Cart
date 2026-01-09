@@ -17,17 +17,17 @@ export const products: IProduct[] = [
   {
     id: 2,
     name: ITEMS.MILK,
-    price: 50,
+    price: 0.5,
   },
   {
     id: 3,
     name: ITEMS.CHEESE,
-    price: 90,
+    price: 0.9,
   },
   {
     id: 4,
     name: ITEMS.SOUP,
-    price: 60,
+    price: 0.6,
   },
   {
     id: 5,

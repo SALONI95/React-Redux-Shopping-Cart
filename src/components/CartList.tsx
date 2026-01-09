@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { cartItemsWithOffers } from "../features/product/cartSelector";
 import { addToCart, removeItem } from "../features/product/productSlice";
+import { formatEuro } from "../Utitlity Functions/toEuro";
 
 export function CartList() {
   const { cartAfterOffer, billDetails } = useSelector(cartItemsWithOffers);
@@ -15,7 +16,7 @@ export function CartList() {
             <div>
               <div className="flex justify-between text-center">
                 <div>{item.product.name}</div>
-                <div>{item.product.price}</div>
+                <div>{formatEuro(item.product.price)}</div>
 
                 <div className="flex justify-between items-center">
                   <button
@@ -40,12 +41,12 @@ export function CartList() {
               <div className="flex flex-col items-end">
                 <div>
                   <span>Item Cost : </span>
-                  {item.quantity * item.product.price}
+                  {formatEuro(+(item.quantity * item.product.price))}
                 </div>
                 {item.discount != 0 && (
                   <div>
                     <span>Saved : </span>
-                    {item.discount}
+                    {formatEuro(item.discount)}
                   </div>
                 )}
               </div>
@@ -55,9 +56,9 @@ export function CartList() {
       </div>
       {cartAfterOffer.length > 0 && (
         <div className="flex flex-col">
-          <div>Sub Total: {billDetails.subTotal}</div>
-          <div>Discount: {billDetails.discount}</div>
-          <div>Total Amount: {billDetails.totalAmount}</div>
+          <div>Sub Total: {formatEuro(billDetails.subTotal)}</div>
+          <div>Discount: {formatEuro(billDetails.discount)}</div>
+          <div>Total Amount: {formatEuro(+billDetails.totalAmount)}</div>
         </div>
       )}
       {cartAfterOffer.length == 0 && <div>Empty Basket. Please Add Items</div>}
