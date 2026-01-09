@@ -9,8 +9,11 @@ export const cartItemsWithOffers = createSelector(
     const isCheeseItemExist = cartAfterOffer.find(
       (item) => item.product.name == ITEMS.CHEESE
     );
-    if (isCheeseItemExist && isCheeseItemExist.quantity > 1) {
-      isCheeseItemExist.discount = isCheeseItemExist.product.price;
+    if (isCheeseItemExist) {
+      isCheeseItemExist.discount =
+        (isCheeseItemExist.product.price *
+          (isCheeseItemExist.quantity - (isCheeseItemExist.quantity % 2))) /
+        2;
     }
 
     const isSoupItemExist = cartAfterOffer.find(
@@ -28,8 +31,11 @@ export const cartItemsWithOffers = createSelector(
     const isButterItemExist = cartAfterOffer.find(
       (item) => item.product.name == ITEMS.BUTTER
     );
-    if (isButterItemExist && isButterItemExist.quantity > 2) {
-      isButterItemExist.discount = isButterItemExist.product.price;
+    if (isButterItemExist) {
+      isButterItemExist.discount =
+        (isButterItemExist.product.price *
+          (isButterItemExist.quantity - (isButterItemExist.quantity % 3))) /
+        3;
     }
 
     const subTotal: number = +cartAfterOffer
