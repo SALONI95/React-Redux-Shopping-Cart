@@ -39,16 +39,18 @@ export function CartList() {
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <div>
-                  <span>Item Cost : </span>
-                  {formatEuro(+(item.quantity * item.product.price))}
-                </div>
                 {item.discount != 0 && (
                   <div>
                     <span>Saved : </span>
                     {formatEuro(item.discount)}
                   </div>
                 )}
+                <div>
+                  <span>Item Cost : </span>
+                  {formatEuro(
+                    +(item.quantity * item.product.price - item.discount)
+                  )}
+                </div>
               </div>
             </div>
           ) : null
