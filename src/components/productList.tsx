@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/product/productSlice";
 
 export function ProductList() {
-  const [productlist, setProductList] = useState<IProduct[]>(products);
+  const [productlist] = useState<IProduct[]>(products);
   const dispatch = useDispatch();
 
   const handleCart = (product: IProduct) => {
